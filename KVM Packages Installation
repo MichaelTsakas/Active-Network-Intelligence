@@ -1,0 +1,6 @@
+Several software are being used on the hypervisor in explaining the guide. The following software packages need to be installed:
+
+  yum install qemu-kvm libvirt virt-install hwloc
+  systemctl start libvirtd
+
+
