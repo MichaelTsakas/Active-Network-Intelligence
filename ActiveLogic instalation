@@ -1,0 +1,31 @@
+#Make sure you have the PIC .qcow image in the /var/lib/libvirt/images/ folder
+
+
+#Given below is an example where have 2 ActiveLogic virtual machines. Assume that the qcow2 files placed in /var/lib/libvirt/images/ are designated as activelogic-my_site-1.qcow2 and activelogic-my_site-2.qcow2. Execute the following commands with root privileges:
+
+cp activelogic2-xeon-plos_64-21.30.03.3-disk1.qcow2 /var/lib/libvirt/images/activelogic-my_site-1.qcow2
+
+#Now create the Activelogic virtual machine as below. The memory and CPU parameters in a real deployment should be determined based on a dimensioning exercise.
+
+
+  virt-install --connect qemu:///system --name=activelogic \
+  --memory=16384 --vcpus=8 --os-type=linux --os-variant=virtio26 \
+     --disk path=/var/lib/libvirt/images/activelogic-lab1.qcow2,format=qcow2,bus=virtio,cache=none \
+     --network bridge=admin,model=virtio \
+     --network bridge=aux,model=virtio \
+     --network bridge=ch1int,model=virtio \
+     --network bridge=ch1ext,model=virtio \
+     --memorybacking hugepages=on,nosharepages=on,size=1,unit=G \
+     --graphics=none --noautoconsole --import
+     
+#Enter in to the Configuration mode 
+configure
+#set system network interface admin   { ipv4   |   ipv6 }   static address   IP address prefix-length   24unsignedByte, 0 .. 32   router   IP address
+set system network interface admin ipv4 static address 10.0.0.25 prefix-length 24 router 10.0.0.1  
+
+#Add a Network Time Protocol (NTP) server	
+set system ntp server   host:IP address
+
+#Set the time zone for your region	
+set system timezone   geographical timezone
+
