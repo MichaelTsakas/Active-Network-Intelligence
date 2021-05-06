@@ -29,3 +29,7 @@ set system ntp server   host:IP address
 #Set the time zone for your region	
 set system timezone   geographical timezone
 
+#add the aux interface and its ip address (eth1 is the default aux interface)
+set system network interface aux physical-interfaces eth1
+set system network interface aux ipv4 static address 172.25.50.141 prefix-length 24
+
