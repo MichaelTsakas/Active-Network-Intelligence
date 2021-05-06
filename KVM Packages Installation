@@ -118,6 +118,15 @@ service network restart
 
 ================================================================
 
+#do the below changes on all the bridge interfaces
+
+brctl stp BRIDGE_NAME off  
+brctl setfd BRIDGE_NAME 0  
+ip link set dev BRIDGE_NAME mtu 1500 
+
+
+
+
 
 
 #Find how much memory the system has
